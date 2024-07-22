@@ -3,12 +3,10 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-from wonderwords import RandomSentence
 
 from .llama_client import model
 from .models import Message, User
 
-s = RandomSentence()
 
 def index(request):
     if not request.user.is_authenticated:
@@ -80,9 +78,7 @@ def query(request):
         rply_object = Message(sender='chatbot', message=reply, user=request.user)
         rply_object.save()
 
-        messages = Message.objects.filter(user=request.user)
-
-        return render(request, 'marinechat/index.html', {
-            'messages': messages,
-        })
-    return render(request, 'marinechat/index.html')
+        return HttpResponseRedirect(reverse("index"))
+    return render(request, 'marinechat/index.html', {
+        'messages': Message.objects.filter(user=request.user)
+    })
