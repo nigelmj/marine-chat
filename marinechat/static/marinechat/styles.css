@@ -8,7 +8,7 @@ body {
 
 header {
     background-color: #000;
-    padding: 3%;
+    padding: 2%;
     color: #fff;
     text-align: left;
     display: flex;
@@ -42,17 +42,11 @@ header .logo {
     font-weight: semi-bold;
 }
 
-main {
-    display: flex;
-    justify-content: flex-start;
-    height: calc(100vh - 60px);
-}
-
 .main {
     margin: auto;
     max-width: 70%;
-    padding-top: 5%;
-    height: 75vh;
+    padding-top: 2%;
+    height: 85vh;
     display: flex;
     flex-direction: column;
 }
