@@ -12,14 +12,14 @@
                     {% for message in messages %}
                         {% if message.sender == 'user' %}
                             <div class="query-message-container">
-                                <p class="query-message">{{ message.message }}</p>
+                                <p class="query-message" data-markdown="{{ message.message|safe }}"></p>
                             </div>
                         {% else %}
                             <div class="query-reply-container">
-                                <p class="query-reply">{{ message.message }}</p>
+                                <p class="query-reply" data-markdown="{{ message.message|safe }}"></p>
                             </div>
                         {% endif %}
-                    {% endfor%}
+                    {% endfor %}
                 {% endif %}
             </div>
         </div>
