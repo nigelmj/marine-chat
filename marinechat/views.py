@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .llama_client import model
+from .llama_client import query_with_system_prompt
 from .models import Message, User
 
 
@@ -71,7 +71,7 @@ def query(request):
     if request.method == 'POST':
         message = request.POST['query']
         user = request.user
-        reply = model.invoke(message).content
+        reply = query_with_system_prompt(message).content
 
         msg_object = Message(sender='user', message=message, user=request.user)
         msg_object.save()
