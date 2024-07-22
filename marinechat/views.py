@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from wonderwords import RandomSentence
 
+from .llama_client import model
 from .models import Message, User
 
 s = RandomSentence()
@@ -72,7 +73,7 @@ def query(request):
     if request.method == 'POST':
         message = request.POST['query']
         user = request.user
-        reply = s.sentence()
+        reply = model.invoke(message).content
 
         msg_object = Message(sender='user', message=message, user=request.user)
         msg_object.save()
