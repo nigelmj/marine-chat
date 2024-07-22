@@ -1,0 +1,34 @@
+{% extends 'marinechat/layout.html' %}
+
+{% block body %}
+    <div class="main">
+        <div class="content">
+            <div class="chat-container">
+                {% if not messages %}
+                    <div class="bot-message">
+                        <p>Hi there! I'm the chat bot. How can I help you?</p>
+                    </div>
+                {% else %}
+                    {% for message in messages %}
+                        {% if message.sender == 'user' %}
+                            <div class="query-message-container">
+                                <p class="query-message">{{ message.message }}</p>
+                            </div>
+                        {% else %}
+                            <div class="query-reply-container">
+                                <p class="query-reply">{{ message.message }}</p>
+                            </div>
+                        {% endif %}
+                    {% endfor%}
+                {% endif %}
+            </div>
+        </div>
+
+        <form class="query-form" action="{% url 'query' %}" method="post">
+            {% csrf_token %}
+            <input class="query-input" type="text" id="user-input" placeholder="Message MarineChat" name="query" />
+            <input class="query-submit" type="image" alt="Send" src="/static/marinechat/assets/search.png"/>
+        </form>
+    </div>
+
+{% endblock %}

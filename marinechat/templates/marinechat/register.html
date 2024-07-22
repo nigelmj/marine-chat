@@ -1,0 +1,30 @@
+{% extends 'marinechat/layout.html' %}
+
+{% block body %}
+
+    <div class="login-container">
+        <h1>Register</h1>
+
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            <label for="email">Email</label>
+            <input autofocus type="email" name="email" placeholder="E.g. john.doe@example.com">
+
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Enter your Password">
+
+            <label for="email">Confirm Password</label>
+            <input type="password" name="confirmation" placeholder="Re-enter your Password">
+
+            <input class="button" type="submit" value="Register">
+        </form>
+
+        <p class="register">Already have an account? <a href="{% url 'login' %}">Log in here.</a></>
+
+    </div>
+
+{% endblock %}

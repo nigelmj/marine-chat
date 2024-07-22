@@ -1,0 +1,38 @@
+{% extends "marinechat/layout.html" %}
+
+{% block body %}
+
+    <div class="login-container">
+        <h1>Login</h1>
+        <p>Hi, Welcome back! 👋</p>
+
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
+
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <label for="email">Email</label>
+            <input
+                autofocus
+                type="email"
+                name="email"
+                placeholder="E.g. john.doe@example.com"
+            />
+            <label for="password">Password</label>
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter your Password"
+            />
+            <div class="options">
+                <div> <input type="checkbox"> Remember me </div>
+                <a href="#">Forgot your password?</a>
+            </div>
+            <input class="button" type="submit" value="Login" />
+            <p class="register">Not registered yet? <a href="{% url 'register' %}">Create an account</a></p>
+        </form>
+
+    </div>
+
+{% endblock %}

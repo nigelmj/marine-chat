@@ -1,0 +1,228 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #000;
+    padding: 3%;
+    color: #fff;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+header .logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 36px;
+}
+
+.links {
+    padding-left: 20px;
+}
+
+.logo-container a,
+.signed-in-user a {
+    color: #fff;
+    font-size: 20px;
+}
+
+.logo-container a:hover,
+.signed-in-user a:hover {
+    color: #cad2de;
+    font-weight: semi-bold;
+}
+
+main {
+    display: flex;
+    justify-content: flex-start;
+    height: calc(100vh - 60px);
+}
+
+.main {
+    margin: auto;
+    max-width: 80%;
+    padding-top: 5%;
+    height: 75vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container {
+    padding-top: 5%;
+    max-width: 30%;
+    width: 100%;
+    text-align: left;
+    margin: auto;
+}
+
+h1 {
+    font-size: 48px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: #333;
+    text-align: left;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    padding-left: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 65vh;
+    overflow-y: auto;
+    padding-bottom: 30px;
+}
+
+.chat-container {
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+}
+
+.query-message-container,
+.query-reply-container {
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: auto;
+    max-width: 70%;
+    border-radius: 20px;
+    display: flex;
+    color: #fff;
+    margin-bottom: 20px;
+    max-width: 60%;
+    word-wrap: break-word;
+}
+
+.query-message-container {
+    background-color: #007bff;
+    border: 1px solid #007bff;
+    flex-direction: row-reverse;
+    align-items: right;
+    align-self: flex-end;
+}
+
+.query-reply-container {
+    border: 1px solid #ccc;
+    background-color: #ccc;
+    flex-direction: row;
+    align-items: left;
+    align-self: flex-start;
+}
+
+.query-message,
+.query-reply {
+    color: #fff;
+    margin: 0%;
+}
+
+.query-form {
+    width: 100%;
+    padding: 10px;
+    padding-left: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 15px;
+    display: flex;
+    flex-direction: row;
+}
+
+.query-input {
+    background: inherit;
+    border: none;
+    width: 100%;
+    max-width: 100%;
+    margin: auto;
+}
+
+.query-submit {
+    width: auto;
+    max-width: 2%;
+    margin: auto;
+    margin-right: 10px;
+    color: "#ccc";
+}
+
+input:focus {
+    outline: none;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.options a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.options a:hover {
+    text-decoration: underline;
+}
+
+.button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.register {
+    margin-top: 20px;
+}
+
+.register a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}

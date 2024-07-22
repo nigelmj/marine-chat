@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}MarineChat{% endblock %}</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'marinechat/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div class="logo-container">
+                <div class="logo">MarineChat</div>
+                <ul class="nav links">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'documents' %}">All Documents</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="signed-in-user">
+                {% if user.is_authenticated %}
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'logout' %}">Log out</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{ user.username }}</a>
+                        </li>
+                    </ul>
+                {% else %}
+                    Not signed in.
+                {% endif %}
+            </div>
+
+        </header>
+
+        {% block body %}
+
+        {% endblock %}
+
+    </body>
+</html>
