@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("[data-markdown]").forEach(function (element) {
     const markdownText = element.getAttribute("data-markdown");
     if (markdownText) {
-      element.innerHTML = md.renderInline(markdownText);
+      element.innerHTML = md.render(markdownText);
+      console.log(md.renderInline(markdownText));
     }
   });
 });

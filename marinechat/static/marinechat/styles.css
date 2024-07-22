@@ -148,6 +148,7 @@ input[type="password"] {
 .query-reply {
     color: #fff;
     margin: 0%;
+    margin-bottom: -1rem;
 }
 
 .query-form {
