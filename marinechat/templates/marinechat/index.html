@@ -15,8 +15,13 @@
                                 <p class="query query-message">{{ message.message }}</p>
                             </div>
                         {% else %}
-                            <div class="query-reply-container">
-                                <p class="query query-reply">{{ message.message }}</p>
+                            <div class="query-reply-section">
+                                <div class="logo-circle">
+                                    <img src="/static/marinechat/assets/ship.svg" alt="Logo" class="logo-svg">
+                                </div>
+                                <div class="query-reply-container">
+                                    <p class="query query-reply">{{ message.message }}</p>
+                                </div>
                             </div>
                         {% endif %}
                     {% endfor %}

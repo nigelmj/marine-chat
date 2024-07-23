@@ -107,6 +107,27 @@ input[type="password"] {
     height: auto;
 }
 
+.query-reply-section {
+    display: flex;
+    flex-direction: row;
+}
+
+.logo-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #3f51b5; /* Background color of the circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.logo-circle img {
+    width: 70%; /* Adjust as needed */
+    height: 70%;
+}
+
 .query-message-container,
 .query-reply-container {
     padding: 10px;
