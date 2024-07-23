@@ -116,7 +116,7 @@ input[type="password"] {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: #3f51b5; /* Background color of the circle */
+    background-color: #3f51b5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -124,7 +124,7 @@ input[type="password"] {
 }
 
 .logo-circle img {
-    width: 70%; /* Adjust as needed */
+    width: 70%;
     height: 70%;
 }
 
@@ -164,6 +164,35 @@ input[type="password"] {
     color: #fff;
     margin: 0%;
     margin-bottom: -1rem;
+}
+
+pre {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 10px 0;
+}
+
+code {
+    font-family: "Menlo", Courier, monospace;
+}
+
+p code {
+    font-weight: bold;
+    color: #c3dcf7;
+}
+
+pre code {
+    font-size: 16px;
+    font-weight: normal;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: #f8f8f2;
 }
 
 .query-form {
