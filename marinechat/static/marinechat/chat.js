@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   const md = window.markdownit();
 
-  document.querySelectorAll("[data-markdown]").forEach(function (element) {
-    const markdownText = element.getAttribute("data-markdown");
-    if (markdownText) {
-      element.innerHTML = md.render(markdownText);
+  document.querySelectorAll(".query").forEach(function (element) {
+    const plainText = element.innerHTML;
+    if (plainText) {
+      const markdownText = md.render(plainText);
+      element.innerHTML = markdownText;
     }
   });
   scrollToBottom();
