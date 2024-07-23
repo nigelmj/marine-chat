@@ -1,8 +1,12 @@
 from django.contrib.auth import authenticate, login, logout
+from django.core import serializers
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
+from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+
+import json
 
 from .llama_client import query_with_system_prompt
 from .models import Message, User
@@ -69,7 +73,9 @@ def documents(request):
 
 def query(request):
     if request.method == 'POST':
-        message = request.POST['query']
+        data = json.loads(request.body)
+
+        message = data.get("query", "")
         user = request.user
         reply = query_with_system_prompt(message).content
 
@@ -78,7 +84,15 @@ def query(request):
         rply_object = Message(sender='chatbot', message=reply, user=request.user)
         rply_object.save()
 
-        return HttpResponseRedirect(reverse("index"))
-    return render(request, 'marinechat/index.html', {
-        'messages': Message.objects.filter(user=request.user)
-    })
+        response = serializers.serialize('json', Message.objects.filter(user=request.user))
+
+        return JsonResponse({
+            'messages': response,
+        }, status=200)
+
+    response = serializers.serialize('json', Message.objects.filter(user=request.user))
+
+    return JsonResponse({
+        'messages': response,
+        'error': 'Method Not Allowed. Only POST method is allowed.'
+    }, status=405)

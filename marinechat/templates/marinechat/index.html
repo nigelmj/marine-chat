@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <form class="query-form" action="{% url 'query' %}" method="post">
+        <form class="query-form" method="post">
             {% csrf_token %}
             <input class="query-input" type="text" id="user-input" placeholder="Message MarineChat" name="query" />
             <input class="query-submit" type="image" alt="Send" src="/static/marinechat/assets/search.png"/>
