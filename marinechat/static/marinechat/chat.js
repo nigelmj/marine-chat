@@ -52,6 +52,7 @@ function appendMessage(message) {
 
     const replyContainer = document.createElement("div");
     replyContainer.classList.add("query-reply-container");
+    messageP.classList.add("query-reply");
 
     replyContainer.appendChild(messageP);
 
