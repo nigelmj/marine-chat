@@ -5,7 +5,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const markdownText = element.getAttribute("data-markdown");
     if (markdownText) {
       element.innerHTML = md.render(markdownText);
-      console.log(md.renderInline(markdownText));
     }
   });
+  scrollToBottom();
 });
+
+// Function to scroll to the bottom of the chat container
+function scrollToBottom() {
+  const contentDiv = document.querySelector(".content");
+  contentDiv.scroll({
+    top: contentDiv.scrollHeight,
+    behavior: "smooth",
+  });
+}
