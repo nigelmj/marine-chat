@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const md = window.markdownit();
 
   document.querySelectorAll(".query").forEach(function (element) {
-    const plainText = element.innerHTML;
+    const plainText = element.textContent;
     if (plainText) {
       const markdownText = md.render(plainText);
       element.innerHTML = markdownText;
