@@ -1,11 +1,12 @@
 import bs4
+import os
+
 from langchain_chroma import Chroma
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_google_vertexai.embeddings import VertexAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-# Only keep post title, headers, and content from the full HTML.
-
+# TODO: Switch to loading required PDFs
 def load_documents():
     bs4_strainer = bs4.SoupStrainer(class_=("post-title", "post-header", "post-content"))
     loader = WebBaseLoader(
@@ -22,11 +23,12 @@ def split_documents(docs):
     return all_splits
 
 def store_documents(all_splits):
-    embedding = VertexAIEmbeddings(model_name="textembedding-gecko@001")
-    vectorstore = Chroma.from_documents(documents=all_splits, embedding=embedding)
-    vectorstore.persist()
-
-def index_documents():
-    docs = load_documents()
-    all_splits = split_documents(docs)
-    store_documents(all_splits)
+    embedding = VertexAIEmbeddings(
+        model_name="textembedding-gecko@001",
+        project=os.environ.get("GOOGLE_CLOUD_PROJECT"),
+    )
+    vectorstore = Chroma.from_documents(
+        documents=all_splits,
+        embedding=embedding,
+        persist_directory="vectordb"
+    )
