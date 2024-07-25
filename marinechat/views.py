@@ -8,8 +8,8 @@ from django.urls import reverse
 
 import json
 
-from .llama_client import query_with_system_prompt
 from .models import Message, User
+from .utils import retrieve_and_generate
 
 
 def index(request):
@@ -77,7 +77,7 @@ def query(request):
 
         message = data.get("query", "")
         user = request.user
-        reply = query_with_system_prompt(message).content
+        reply = retrieve_and_generate(message)
 
         msg_object = Message(sender='user', message=message, user=request.user)
         msg_object.save()
