@@ -39,6 +39,9 @@ function appendQuery(query) {
 
   const messagesContainer = document.querySelector(".chat-container");
   messagesContainer.appendChild(messageDiv);
+
+  scrollToBottom();
+
 }
 
 function appendReply(message) {
@@ -60,7 +63,6 @@ function appendReply(message) {
   const replyContainer = document.createElement("div");
   replyContainer.classList.add("query-reply-container");
 
-  messageP.innerHTML = md.render(message.fields.message);
   messageP.classList.add("query-reply");
 
   replyContainer.appendChild(messageP);
@@ -72,7 +74,17 @@ function appendReply(message) {
   const messagesContainer = document.querySelector(".chat-container");
   messagesContainer.appendChild(messageDiv);
 
-  scrollToBottom();
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = md.render(message.fields.message);
+
+  var typing = new Typing({
+    source: tempDiv,
+    output: messageP,
+    delay: 30,
+  });
+  typing.start();
+
+  tempDiv.remove();
 }
 
 // Function to handle form submission
