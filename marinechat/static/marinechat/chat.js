@@ -41,6 +41,7 @@ function appendQuery(query) {
   messagesContainer.appendChild(messageDiv);
 
   scrollToBottom();
+
 }
 
 function appendReply(message) {
