@@ -6,11 +6,12 @@ class User(AbstractUser):
         return self.username
 
 class Document(models.Model):
-    document = models.FileField(upload_to="documents/")
+    title = models.CharField(max_length=255, default="Untitled")
+    file = models.FileField(upload_to="documents/")
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.document.name
+        return self.title
 
 class Message(models.Model):
     sender_choices = [

@@ -42,6 +42,10 @@ header .logo {
     font-weight: semi-bold;
 }
 
+.logo-link {
+    padding: 0;
+}
+
 .main {
     margin: auto;
     max-width: 70%;

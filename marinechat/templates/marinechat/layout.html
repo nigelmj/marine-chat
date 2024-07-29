@@ -13,11 +13,11 @@
     <body>
         <header>
             <div class="logo-container">
-                <div class="logo">MarineChat</div>
+                <a class="nav-link logo-link" href="{% url 'index' %}"><div class="logo">MarineChat</div></a>
                 <ul class="nav links">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'documents' %}">All Documents</a>
+                            <a class="nav-link" href="{% url 'documents' %}">Documents</a>
                         </li>
                     {% endif %}
                 </ul>

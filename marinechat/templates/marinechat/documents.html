@@ -1,0 +1,16 @@
+{% extends 'marinechat/layout.html' %}
+
+{% block body %}
+
+    <div class="documents-container">
+        <h1 class="documents-heading">Documents List</h1>
+        <ul class="documents-list">
+            {% for document in documents %}
+                <li class="document">
+                    <a href="{% url 'serve_document' document.id %}">{{ document.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}
