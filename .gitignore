@@ -5,7 +5,7 @@
 db.sqlite3
 
 # Vector database directory
-vectordb
+pdf_embeddings/
 
 # Virtual environment directory
 venv/
