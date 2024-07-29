@@ -61,9 +61,9 @@ def retrieve_and_generate(question):
     system_prompt = (
         "You're a helpful AI assistant. Given a user question "
         "and some maritime document snippets, answer the user "
-        "question. If none of the articles answer the question, "
+        "question. If none of the documents answer the question, "
         "just say you don't know."
-        "\n\nHere are the documents: "
+        "\n\nHere are the document snippets: "
         "{context}"
     )
     prompt = ChatPromptTemplate.from_messages(
@@ -93,4 +93,10 @@ def retrieve_and_generate(question):
     )
 
     result = chain.invoke({"question": question})
+    if not result["answer"]:
+        result["answer"] = QuotedAnswer(
+            answer="Sorry, I couldn't find the answer from the provided context. Thanks for asking!",
+            citations=[],
+        )
+
     return result

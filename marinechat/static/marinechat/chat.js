@@ -25,6 +25,13 @@ function scrollToBottom() {
   });
 }
 
+function truncateText(text, maxLength) {
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + "...";
+  }
+  return text;
+}
+
 function appendQuery(query) {
   const md = window.markdownit();
 
@@ -41,7 +48,6 @@ function appendQuery(query) {
   messagesContainer.appendChild(messageDiv);
 
   scrollToBottom();
-
 }
 
 function appendReply(message) {
@@ -75,7 +81,20 @@ function appendReply(message) {
   messagesContainer.appendChild(messageDiv);
 
   const tempDiv = document.createElement("div");
-  tempDiv.innerHTML = md.render(message.fields.message);
+  tempDiv.innerHTML = md.render(message.message);
+
+  if (message.citations.length > 0) {
+    tempDiv.innerHTML += "<br>References:";
+    message.citations.forEach((citation, index) => {
+      const referenceNumber = `[${index + 1}] `;
+      const truncatedQuote = truncateText(citation.quote, 100);
+
+      const sourceURL = `/marinechat/document/${citation.source.id}/`;
+      const citationLink = `[${referenceNumber} ${truncatedQuote}](${sourceURL})`;
+
+      tempDiv.innerHTML += md.render("\n" + citationLink);
+    });
+  }
 
   var typing = new Typing({
     source: tempDiv,
@@ -121,7 +140,7 @@ function handleServerResponse(data) {
   if (data.error) {
     console.error(data.error);
   } else {
-    const messages = JSON.parse(data.messages);
+    const messages = data.messages;
     appendReply(messages[messages.length - 1]);
   }
 }

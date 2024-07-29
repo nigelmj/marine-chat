@@ -26,3 +26,11 @@ class Message(models.Model):
 
     def __str__(self):
         return self.message
+
+class Citation(models.Model):
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, related_name="citations")
+    source = models.ForeignKey(Document, on_delete=models.CASCADE, related_name="citations")
+    quote = models.TextField()
+
+    def __str__(self):
+        return f"{self.source.title}: {self.quote}"
