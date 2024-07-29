@@ -1,9 +1,8 @@
-import bs4
 import os
 
 from langchain import hub
 from langchain_chroma import Chroma
-from langchain_community.document_loaders import WebBaseLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 from langchain_google_vertexai import ChatVertexAI
@@ -12,11 +11,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 # TODO: Switch to loading required PDFs
 def load_documents():
-    bs4_strainer = bs4.SoupStrainer(class_=("post-title", "post-header", "post-content"))
-    loader = WebBaseLoader(
-    web_paths=("https://lilianweng.github.io/posts/2023-06-23-agent/",),
-    bs_kwargs={"parse_only": bs4_strainer},
-    )
+    loader = PyPDFLoader(os.getenv("PDF_PATH", default=""))
     return loader.load()
 
 def split_documents(docs):
