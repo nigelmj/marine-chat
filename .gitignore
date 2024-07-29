@@ -1,12 +1,23 @@
+# Environment variables
 .env
 
+# SQLite database file
 db.sqlite3
+
+# Vector database directory
 vectordb
 
+# Virtual environment directory
 venv/
 
+# Python cache directories
 **/__pycache__
 
+# Django migration files
 **/migrations/
 
+# macOS system file
 *.DS_Store
+
+# Directory for storing PDFs
+documents
