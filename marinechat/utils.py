@@ -5,23 +5,12 @@ from langchain_chroma import Chroma
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.pydantic_v1 import BaseModel, Field
 from langchain_core.runnables import RunnablePassthrough
 from langchain_google_vertexai import ChatVertexAI
 from langchain_google_vertexai.embeddings import VertexAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from typing import List
-
-class CitedAnswer(BaseModel):
-    """Answer the user question based only on the given sources, and cite the sources used."""
-
-    answer: str = Field(
-        description="The answer to the user question, which is based only on the given sources.",
-    )
-    citations: List[int] = Field(
-        description="The integer IDs of the SPECIFIC sources which justify the answer.",
-    )
+from marinechat.schemas import QuotedAnswer
 
 def load_documents():
     pdf_folder_path = os.getenv("PDF_FOLDER_PATH", default="")
@@ -57,7 +46,7 @@ def store_documents(all_splits):
 
 def retrieve_and_generate(question):
     llm = ChatVertexAI(model="gemini-1.5-flash")
-    structured_llm = llm.with_structured_output(CitedAnswer)
+    structured_llm = llm.with_structured_output(QuotedAnswer)
 
     embedding = VertexAIEmbeddings(
         model_name="textembedding-gecko@001",
@@ -86,7 +75,7 @@ def retrieve_and_generate(question):
 
     def format_docs_with_id(docs) -> str:
         formatted = [
-            f"Source ID: {i}\nArticle Title: {doc.metadata['source']}\nArticle Snippet: {doc.page_content}"
+            f"Source ID: {i}\nDocument Title: {doc.metadata['source']}\nDocument Snippet: {doc.page_content}"
             for i, doc in enumerate(docs)
         ]
         return "\n\n" + "\n\n".join(formatted)
