@@ -83,7 +83,7 @@ def query(request):
         msg_object.save()
 
         generated_response = retrieve_and_generate(question)['answer']
-        reply = generated_response.answer
+        reply = generated_response.answer.replace('\\n', '  \n')
         rply_object = Message(sender='chatbot', message=reply, user=request.user)
         rply_object.save()
 
