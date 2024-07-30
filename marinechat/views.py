@@ -1,15 +1,19 @@
 from django.contrib.auth import authenticate, login, logout
-from django.core import serializers
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.http.response import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-import json
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-from .llama_client import query_with_system_prompt
-from .models import Message, User
+import json
+import re
+
+from .models import Document, Citation, Message, User
+from .serializers import MessageSerializer
+from .utils import retrieve_and_generate
 
 
 def index(request):
@@ -68,31 +72,49 @@ def register(request):
     else:
         return render(request, "marinechat/register.html")
 
-def documents(request):
-    return render(request, 'marinechat/documents.html')
-
+@api_view(['POST'])
 def query(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
+        data = request.data
 
-        message = data.get("query", "")
         user = request.user
-        reply = query_with_system_prompt(message).content
-
-        msg_object = Message(sender='user', message=message, user=request.user)
+        question = data.get("query", "")
+        msg_object = Message(sender='user', message=question, user=request.user)
         msg_object.save()
+
+        generated_response = retrieve_and_generate(question)['answer']
+        reply = generated_response.answer
         rply_object = Message(sender='chatbot', message=reply, user=request.user)
         rply_object.save()
 
-        response = serializers.serialize('json', Message.objects.filter(user=request.user))
+        if generated_response.citations:
+            for citation in generated_response.citations:
+                citation.quote = re.sub(r'[\n]', '', citation.quote).strip()
+                citation_source = Document.objects.get(file=citation.source)
+                citation_object = Citation(
+                    message=rply_object, source=citation_source, quote=citation.quote
+                )
+                citation_object.save()
 
-        return JsonResponse({
-            'messages': response,
-        }, status=200)
+        messages = Message.objects.all()
+        serializer = MessageSerializer(messages, many=True)
 
-    response = serializers.serialize('json', Message.objects.filter(user=request.user))
+        return Response({'messages': serializer.data}, status=status.HTTP_200_OK)
 
-    return JsonResponse({
-        'messages': response,
-        'error': 'Method Not Allowed. Only POST method is allowed.'
-    }, status=405)
+    return Response(
+        {'error': 'Method Not Allowed. Only POST method is allowed.'},
+        status=status.HTTP_405_METHOD_NOT_ALLOWED
+    )
+
+def documents(request):
+    documents = Document.objects.all()
+    return render(request, 'marinechat/documents.html', {
+        'documents': documents
+    })
+
+def serve_document(request, id):
+    document = get_object_or_404(Document, id=id)
+    with open(document.file.path, 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = f'inline; filename="{document.title}.pdf"'
+        return response

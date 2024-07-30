@@ -25,53 +25,123 @@ function scrollToBottom() {
   });
 }
 
-// Function to render messages
-function appendMessage(message) {
+function truncateText(text, maxLength) {
+  if (text.length > maxLength) {
+    return text.slice(0, maxLength) + "...";
+  }
+  return text;
+}
+
+function appendQuery(query) {
   const md = window.markdownit();
 
   const messageDiv = document.createElement("div");
   const messageP = document.createElement("p");
 
-  messageP.innerHTML = md.render(message.fields.message);
+  messageP.innerHTML = md.render(query);
+  messageP.classList.add("query-message");
 
-  if (message.fields.sender === "user") {
-    messageDiv.classList.add("query-message-container");
-    messageP.classList.add("query-message");
+  messageDiv.appendChild(messageP);
+  messageDiv.classList.add("query-message-container");
 
-    messageDiv.appendChild(messageP);
-  } else {
-    const logoDiv = document.createElement("div");
-    logoDiv.classList.add("logo-circle");
+  const messagesContainer = document.querySelector(".chat-container");
+  messagesContainer.appendChild(messageDiv);
+}
 
-    const logoImg = document.createElement("img");
-    logoImg.src = "/static/marinechat/assets/ship.svg";
-    logoImg.alt = "Logo";
-    logoImg.classList.add("logo-svg");
+function appendReply(message) {
+  const md = window.markdownit();
 
-    logoDiv.appendChild(logoImg);
+  const messageP = document.querySelector(".temp-cursor");
+  messageP.innerHTML = "";
+  messageP.classList.remove("temp-cursor");
 
-    const replyContainer = document.createElement("div");
-    replyContainer.classList.add("query-reply-container");
-    messageP.classList.add("query-reply");
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = md.render(message.message);
 
-    replyContainer.appendChild(messageP);
+  appendCitation(message, tempDiv);
 
-    messageDiv.classList.add("query-reply-section");
-    messageDiv.appendChild(logoDiv);
-    messageDiv.appendChild(replyContainer);
+  var typing = new Typing({
+    source: tempDiv,
+    output: messageP,
+    delay: 30,
+  });
+  typing.start();
+
+  tempDiv.remove();
+}
+
+function appendCitation(message, tempDiv) {
+  if (message.citations.length > 0) {
+    const citationDiv = document.createElement("div");
+    citationDiv.classList.add("citation-container");
+
+    citationDiv.innerHTML += "References:<br>";
+    message.citations.forEach((citation, index) => {
+      const referenceNumber = `${index + 1}. `;
+      const truncatedQuote = truncateText(citation.quote, 100);
+
+      const sourceURL = `/marinechat/document/${citation.source.id}/`;
+
+      const citationP = document.createElement("p");
+      citationP.classList.add("citation-paragraph");
+
+      const citationLink = document.createElement("a");
+      citationLink.href = sourceURL;
+      citationLink.innerHTML = `${referenceNumber} ${truncatedQuote}`;
+      citationLink.classList.add("citation-link");
+
+      citationP.appendChild(citationLink);
+      citationDiv.appendChild(citationP);
+      citationDiv.style.marginBottom = "1rem";
+    });
+
+    tempDiv.appendChild(citationDiv);
   }
+}
+
+function createTempCursor() {
+  const messageDiv = document.createElement("div");
+  const messageP = document.createElement("p");
+
+  const logoDiv = document.createElement("div");
+  logoDiv.classList.add("logo-circle");
+
+  const logoImg = document.createElement("img");
+  logoImg.src = "/static/marinechat/assets/ship.svg";
+  logoImg.alt = "Logo";
+  logoImg.classList.add("logo-svg");
+
+  logoDiv.appendChild(logoImg);
+
+  const replyContainer = document.createElement("div");
+  replyContainer.classList.add("query-reply-container");
+
+  messageP.classList.add("temp-cursor");
+  messageP.classList.add("query-reply");
+  messageP.innerHTML = "Thinking";
+
+  replyContainer.appendChild(messageP);
+
+  messageDiv.classList.add("query-reply-section");
+  messageDiv.appendChild(logoDiv);
+  messageDiv.appendChild(replyContainer);
 
   const messagesContainer = document.querySelector(".chat-container");
   messagesContainer.appendChild(messageDiv);
 
   scrollToBottom();
 }
-
 // Function to handle form submission
 function handleFormSubmission(event) {
   event.preventDefault();
   const query = document.querySelector(".query-input").value;
+
+  appendQuery(query);
+  document.querySelector(".query-input").value = "";
+  createTempCursor();
+
   sendQueryToServer(query);
+  removeIntro();
 }
 
 // Function to send the query to the server
@@ -96,11 +166,8 @@ function handleServerResponse(data) {
   if (data.error) {
     console.error(data.error);
   } else {
-    const messages = JSON.parse(data.messages);
-
-    appendMessage(messages[messages.length - 2]);
-    appendMessage(messages[messages.length - 1]);
-    document.querySelector(".query-input").value = "";
+    const messages = data.messages;
+    appendReply(messages[messages.length - 1]);
   }
 }
 
@@ -118,4 +185,11 @@ function getCookie(name) {
     }
   }
   return cookieValue;
+}
+
+function removeIntro() {
+  const intro = document.querySelector(".welcome-message");
+  if (intro) {
+    intro.remove();
+  }
 }

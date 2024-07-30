@@ -5,7 +5,7 @@
         <div class="content">
             <div class="chat-container">
                 {% if not messages %}
-                    <div class="bot-message">
+                    <div class="welcome-message">
                         <p>Hi there! I'm the chat bot. How can I help you?</p>
                     </div>
                 {% else %}
@@ -21,6 +21,18 @@
                                 </div>
                                 <div class="query-reply-container">
                                     <p class="query query-reply">{{ message.message }}</p>
+                                    {% if message.citations.all %}
+                                        <div class="citation-container">
+                                            References:
+                                            {% for citation in message.citations.all %}
+                                                <p class="citation-paragraph">
+                                                    <a href="{% url 'serve_document' citation.source.id %}" class="citation-link">
+                                                        {{ forloop.counter }}. {{ citation.quote|truncatechars:100 }}
+                                                    </a>
+                                                </p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         {% endif %}

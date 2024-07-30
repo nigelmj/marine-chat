@@ -42,6 +42,10 @@ header .logo {
     font-weight: semi-bold;
 }
 
+.logo-link {
+    padding: 0;
+}
+
 .main {
     margin: auto;
     max-width: 70%;
@@ -128,6 +132,33 @@ input[type="password"] {
     height: 70%;
 }
 
+@keyframes dots {
+    0%,
+    20% {
+        color: rgba(0, 0, 0, 0);
+        text-shadow:
+            0.25em 0 0 rgba(0, 0, 0, 0),
+            0.5em 0 0 rgba(0, 0, 0, 0);
+    }
+    40% {
+        color: white;
+        text-shadow:
+            0.25em 0 0 rgba(0, 0, 0, 0),
+            0.5em 0 0 rgba(0, 0, 0, 0);
+    }
+    60% {
+        text-shadow:
+            0.25em 0 0 white,
+            0.5em 0 0 rgba(0, 0, 0, 0);
+    }
+    80%,
+    100% {
+        text-shadow:
+            0.25em 0 0 white,
+            0.5em 0 0 white;
+    }
+}
+
 .query-message-container,
 .query-reply-container {
     padding: 10px;
@@ -154,7 +185,7 @@ input[type="password"] {
 .query-reply-container {
     border: 1px solid #888;
     background-color: #888;
-    flex-direction: row;
+    flex-direction: column;
     align-items: left;
     align-self: flex-start;
 }
@@ -164,6 +195,15 @@ input[type="password"] {
     color: #fff;
     margin: 0%;
     margin-bottom: -1rem;
+}
+
+.temp-cursor {
+    margin-bottom: 0rem;
+}
+
+.temp-cursor:after {
+    content: ".";
+    animation: dots 1.5s steps(5, end) infinite;
 }
 
 pre {
@@ -193,6 +233,25 @@ pre code {
     border-radius: 0;
     background: none;
     color: #f8f8f2;
+}
+
+.citation-container {
+    margin-top: 10px;
+}
+
+.citation-paragraph {
+    margin-bottom: 4px;
+}
+
+.citation-link {
+    color: #c3dcf7;
+    transition: font-weight 0.3s ease-in-out;
+}
+
+.citation-link:hover {
+    color: #c3dcf7;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .query-form {
