@@ -1,1 +1,1 @@
-A real-time chat application using the Llama model for responses.
+Q&A chat bot utilising RAG workflow built with langchain.
