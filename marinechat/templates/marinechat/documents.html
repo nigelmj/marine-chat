@@ -2,12 +2,14 @@
 
 {% block body %}
 
-    <div class="documents-container">
+    <div class="main">
         <h1 class="documents-heading">Documents List</h1>
         <ul class="documents-list">
             {% for document in documents %}
                 <li class="document">
-                    <a href="{% url 'serve_document' document.id %}">{{ document.title }}</a>
+                    <a href="{% url 'serve_document' document.id %}">
+                        <i class="fa-solid fa-file-pdf"></i> <span class="document-title">{{ document.title }}.pdf</span>
+                    </a>
                 </li>
             {% endfor %}
         </ul>

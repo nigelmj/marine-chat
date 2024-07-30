@@ -34,11 +34,12 @@ header .logo {
 .signed-in-user a {
     color: #fff;
     font-size: 20px;
+    transition: color 0.3s ease;
 }
 
 .logo-container a:hover,
 .signed-in-user a:hover {
-    color: #cad2de;
+    color: #a8b0bd;
     font-weight: semi-bold;
 }
 
@@ -53,6 +54,50 @@ header .logo {
     height: 85vh;
     display: flex;
     flex-direction: column;
+}
+
+.documents-list {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.document {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 15px;
+    width: 25%; /* Adjust the width as needed */
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.document a {
+    text-decoration: none;
+    color: #5086bf;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Space between icon and text */
+}
+
+.document:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.document-title {
+    width: 100%;
+    font-size: 20px;
+}
+
+.fa-file-pdf {
+    color: #d9534f; /* Red color for the PDF icon */
+    font-size: 3em; /* Adjust size as needed */
 }
 
 .login-container {
@@ -91,6 +136,12 @@ input[type="password"] {
     border: 1px solid #ccc;
     border-radius: 10px;
     font-size: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+input[type="email"],
+input[type="password"]:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .content {
@@ -264,6 +315,11 @@ pre code {
     font-size: 15px;
     display: flex;
     flex-direction: row;
+    transition: box-shadow 0.3s ease;
+}
+
+.query-form:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .query-input {
@@ -312,10 +368,12 @@ input:focus {
     color: #fff;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .button:hover {
     background-color: #0056b3;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .register {

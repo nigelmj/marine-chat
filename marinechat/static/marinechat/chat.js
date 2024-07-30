@@ -19,10 +19,12 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to scroll to the bottom of the chat container
 function scrollToBottom() {
   const contentDiv = document.querySelector(".content");
-  contentDiv.scroll({
-    top: contentDiv.scrollHeight,
-    behavior: "smooth",
-  });
+  if (contentDiv) {
+    contentDiv.scroll({
+      top: contentDiv.scrollHeight,
+      behavior: "smooth",
+    });
+  }
 }
 
 function truncateText(text, maxLength) {
