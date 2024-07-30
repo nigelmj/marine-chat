@@ -46,43 +46,31 @@ function appendQuery(query) {
 
   const messagesContainer = document.querySelector(".chat-container");
   messagesContainer.appendChild(messageDiv);
-
-  scrollToBottom();
 }
 
 function appendReply(message) {
   const md = window.markdownit();
 
-  const messageDiv = document.createElement("div");
-  const messageP = document.createElement("p");
-
-  const logoDiv = document.createElement("div");
-  logoDiv.classList.add("logo-circle");
-
-  const logoImg = document.createElement("img");
-  logoImg.src = "/static/marinechat/assets/ship.svg";
-  logoImg.alt = "Logo";
-  logoImg.classList.add("logo-svg");
-
-  logoDiv.appendChild(logoImg);
-
-  const replyContainer = document.createElement("div");
-  replyContainer.classList.add("query-reply-container");
-
-  messageP.classList.add("query-reply");
-
-  replyContainer.appendChild(messageP);
-
-  messageDiv.classList.add("query-reply-section");
-  messageDiv.appendChild(logoDiv);
-  messageDiv.appendChild(replyContainer);
-
-  const messagesContainer = document.querySelector(".chat-container");
-  messagesContainer.appendChild(messageDiv);
+  const messageP = document.querySelector(".temp-cursor");
+  messageP.innerHTML = "";
+  messageP.classList.remove("temp-cursor");
 
   const tempDiv = document.createElement("div");
   tempDiv.innerHTML = md.render(message.message);
 
+  appendCitation(message, tempDiv);
+
+  var typing = new Typing({
+    source: tempDiv,
+    output: messageP,
+    delay: 30,
+  });
+  typing.start();
+
+  tempDiv.remove();
+}
+
+function appendCitation(message, tempDiv) {
   if (message.citations.length > 0) {
     const citationDiv = document.createElement("div");
     citationDiv.classList.add("citation-container");
@@ -107,21 +95,42 @@ function appendReply(message) {
       citationDiv.style.marginBottom = "1rem";
     });
 
-    replyContainer.appendChild(citationDiv);
-
     tempDiv.appendChild(citationDiv);
   }
-
-  var typing = new Typing({
-    source: tempDiv,
-    output: messageP,
-    delay: 30,
-  });
-  typing.start();
-
-  tempDiv.remove();
 }
 
+function createTempCursor() {
+  const messageDiv = document.createElement("div");
+  const messageP = document.createElement("p");
+
+  const logoDiv = document.createElement("div");
+  logoDiv.classList.add("logo-circle");
+
+  const logoImg = document.createElement("img");
+  logoImg.src = "/static/marinechat/assets/ship.svg";
+  logoImg.alt = "Logo";
+  logoImg.classList.add("logo-svg");
+
+  logoDiv.appendChild(logoImg);
+
+  const replyContainer = document.createElement("div");
+  replyContainer.classList.add("query-reply-container");
+
+  messageP.classList.add("temp-cursor");
+  messageP.classList.add("query-reply");
+  messageP.innerHTML = "Thinking";
+
+  replyContainer.appendChild(messageP);
+
+  messageDiv.classList.add("query-reply-section");
+  messageDiv.appendChild(logoDiv);
+  messageDiv.appendChild(replyContainer);
+
+  const messagesContainer = document.querySelector(".chat-container");
+  messagesContainer.appendChild(messageDiv);
+
+  scrollToBottom();
+}
 // Function to handle form submission
 function handleFormSubmission(event) {
   event.preventDefault();
@@ -129,6 +138,7 @@ function handleFormSubmission(event) {
 
   appendQuery(query);
   document.querySelector(".query-input").value = "";
+  createTempCursor();
 
   sendQueryToServer(query);
   removeIntro();
