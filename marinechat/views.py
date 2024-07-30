@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 import json
+import re
 
 from .models import Document, Citation, Message, User
 from .serializers import MessageSerializer
@@ -88,7 +89,7 @@ def query(request):
 
         if generated_response.citations:
             for citation in generated_response.citations:
-                citation.quote = citation.quote.replace('\n', ' ')
+                citation.quote = re.sub(r'[\n]', '', citation.quote).strip()
                 citation_source = Document.objects.get(file=citation.source)
                 citation_object = Citation(
                     message=rply_object, source=citation_source, quote=citation.quote

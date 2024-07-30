@@ -158,7 +158,7 @@ input[type="password"] {
 .query-reply-container {
     border: 1px solid #888;
     background-color: #888;
-    flex-direction: row;
+    flex-direction: column;
     align-items: left;
     align-self: flex-start;
 }
@@ -197,6 +197,25 @@ pre code {
     border-radius: 0;
     background: none;
     color: #f8f8f2;
+}
+
+.citation-container {
+    margin-top: 10px;
+}
+
+.citation-paragraph {
+    margin-bottom: 4px;
+}
+
+.citation-link {
+    color: #c3dcf7;
+    transition: font-weight 0.3s ease-in-out;
+}
+
+.citation-link:hover {
+    color: #c3dcf7;
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .query-form {

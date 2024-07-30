@@ -84,16 +84,32 @@ function appendReply(message) {
   tempDiv.innerHTML = md.render(message.message);
 
   if (message.citations.length > 0) {
-    tempDiv.innerHTML += "<br>References:";
+    const citationDiv = document.createElement("div");
+    citationDiv.classList.add("citation-container");
+
+    citationDiv.innerHTML += "References:<br>";
     message.citations.forEach((citation, index) => {
-      const referenceNumber = `[${index + 1}] `;
+      const referenceNumber = `${index + 1}. `;
       const truncatedQuote = truncateText(citation.quote, 100);
 
       const sourceURL = `/marinechat/document/${citation.source.id}/`;
-      const citationLink = `[${referenceNumber} ${truncatedQuote}](${sourceURL})`;
 
-      tempDiv.innerHTML += md.render("\n" + citationLink);
+      const citationP = document.createElement("p");
+      citationP.classList.add("citation-paragraph");
+
+      const citationLink = document.createElement("a");
+      citationLink.href = sourceURL;
+      citationLink.innerHTML = `${referenceNumber} ${truncatedQuote}`;
+      citationLink.classList.add("citation-link");
+
+      citationP.appendChild(citationLink);
+      citationDiv.appendChild(citationP);
+      citationDiv.style.marginBottom = "1rem";
     });
+
+    replyContainer.appendChild(citationDiv);
+
+    tempDiv.appendChild(citationDiv);
   }
 
   var typing = new Typing({
