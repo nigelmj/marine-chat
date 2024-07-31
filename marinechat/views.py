@@ -90,6 +90,7 @@ def query(request):
         if generated_response.citations:
             for citation in generated_response.citations:
                 citation.quote = re.sub(r'[\n]', '', citation.quote).strip()
+                citation.quote = citation.quote.replace('\\n', ' ')
                 citation_source = Document.objects.get(file=citation.source)
                 citation_object = Citation(
                     message=rply_object, source=citation_source, quote=citation.quote

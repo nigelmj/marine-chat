@@ -61,7 +61,7 @@ def retrieve_and_generate(question):
     system_prompt = (
         "You're a helpful AI assistant. Given a user question "
         "and some maritime document snippets, answer the user "
-        "question. If none of the documents answer the question, "
+        "question in depth. If none of the documents answer the question, "
         "just say you don't know."
         "\n\nHere are the document snippets: "
         "{context}"
