@@ -29,7 +29,7 @@ Marine-Chat is a Q&A chatbot utilizing a Retrieval-Augmented Generation (RAG) wo
 2. Install Dependencies
 
    ```sh
-   pip install -r requirements.txt`
+   pip install -r requirements.txt
    ```
 
 3. Run Migrations
