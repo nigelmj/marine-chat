@@ -17,6 +17,13 @@ Marine-Chat is a Q&A chatbot utilizing a Retrieval-Augmented Generation (RAG) wo
 - Vector Store: ChromaDB
 - Database: SQLite3
 
+## Demo
+
+<video width="600" controls>
+  <source src="videos/demo.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 ## Installation
 
 1. Clone the Repository
