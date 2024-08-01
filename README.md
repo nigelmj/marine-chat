@@ -21,21 +21,28 @@ Marine-Chat is a Q&A chatbot utilizing a Retrieval-Augmented Generation (RAG) wo
 
 1. Clone the Repository
 
-   `git clone https://github.com/nigelmj/marine-chat`
-
-   `cd marine-chat`
+   ```sh
+   git clone https://github.com/nigelmj/marine-chat
+   cd marine-chat
+   ```
 
 2. Install Dependencies
 
-   `pip install -r requirements.txt`
+   ```sh
+   pip install -r requirements.txt`
+   ```
 
 3. Run Migrations
 
-   `python manage.py migrate`
+   ```sh
+   python manage.py migrate
+   ```
 
 4. Start the Development Server
 
-   `python manage.py runserver`
+   ```sh
+   python manage.py runserver
+   ```
 
 ## Usage
 
