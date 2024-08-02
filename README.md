@@ -19,9 +19,7 @@ Marine-Chat is a Q&A chatbot utilizing a Retrieval-Augmented Generation (RAG) wo
 
 ## Demo
 
-<video width="600" controls>
-  <source src="videos/demo.mp4" type="video/mp4">
-  Your browser does not support the video tag.
+<video width="600" src="https://github.com/user-attachments/assets/e42de9df-d698-4426-b750-63878b69f55d">
 </video>
 
 ## Installation
