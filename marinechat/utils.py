@@ -36,7 +36,6 @@ def split_documents(docs):
 def store_documents(all_splits):
     embedding = VertexAIEmbeddings(
         model_name="textembedding-gecko@001",
-        project=os.environ.get("GOOGLE_CLOUD_PROJECT"),
     )
     vectorstore = Chroma.from_documents(
         documents=all_splits,
@@ -50,7 +49,6 @@ def retrieve_and_generate(question):
 
     embedding = VertexAIEmbeddings(
         model_name="textembedding-gecko@001",
-        project=os.environ.get("GOOGLE_CLOUD_PROJECT"),
     )
     vectorstore = Chroma(
         persist_directory="pdf_embeddings",

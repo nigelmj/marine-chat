@@ -24,7 +24,7 @@ Marine-Chat is a Q&A chatbot utilizing a Retrieval-Augmented Generation (RAG) wo
 
 ## Setup
 
-1. Create a Project in the Google Cloud Console and download the JSON key file. 
+1. Create a Project in the Google Cloud Console, [set it up](https://pub.dev/documentation/langchain_google/latest/langchain_google/VertexAIEmbeddings-class.html) and download the JSON key file. 
 
 2. Create a folder named `documents` for storing the PDF files and another named `pdf_embeddings` in the root directory for storing the indexed documents.
 
