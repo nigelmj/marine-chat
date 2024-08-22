@@ -22,6 +22,29 @@ Marine-Chat is a Q&A chatbot utilizing a Retrieval-Augmented Generation (RAG) wo
 <video width="600" src="https://github.com/user-attachments/assets/e42de9df-d698-4426-b750-63878b69f55d">
 </video>
 
+## Setup
+
+1. Create a Project in the Google Cloud Console and download the JSON key file. 
+
+2. Create a folder named `documents` for storing the PDF files and another named `pdf_embeddings` in the root directory for storing the indexed documents.
+
+3. Copy the contents of the `.env.example` file to a `.env` file and set the environment variables.
+
+4. Create the tables in the database by running the following commands:
+
+   ```sh
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+5. Add your documents to the `Documents` table using the shell.
+
+6. Index the documents you have added using the command:
+
+   ```sh
+   python manage.py index
+   ```
+
 ## Installation
 
 1. Clone the Repository
